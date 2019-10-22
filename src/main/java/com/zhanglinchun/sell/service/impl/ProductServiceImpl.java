@@ -1,16 +1,23 @@
 package com.zhanglinchun.sell.service.impl;
 
 import com.zhanglinchun.sell.dataobject.ProductInfo;
+import com.zhanglinchun.sell.dto.CartDTO;
 import com.zhanglinchun.sell.enums.ProductStatusEnum;
+import com.zhanglinchun.sell.enums.ResultEnum;
+import com.zhanglinchun.sell.exception.SellException;
 import com.zhanglinchun.sell.repository.ProductInfoRepository;
 import com.zhanglinchun.sell.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * 商品服务
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -36,5 +43,38 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductInfo save(ProductInfo productInfo) {
         return repository.save(productInfo);
+    }
+
+    @Override
+    @Transactional
+    public void increaseStock(List<CartDTO> cartDTOList) {
+        for (CartDTO cartDTO : cartDTOList) {
+            ProductInfo productInfo = repository.findOne(cartDTO.getProductId());
+            if (productInfo == null) {
+                throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+            }
+            // 数据库里的商品库存 + 购物车里的商品数量
+            Integer result = productInfo.getProductStock() + cartDTO.getProductQuantity();
+            productInfo.setProductStock(result);
+            repository.save(productInfo);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void decreaseStock(List<CartDTO> cartDTOList) {
+        for (CartDTO cartDTO : cartDTOList) {
+            ProductInfo productInfo = repository.findOne(cartDTO.getProductId());
+            if (productInfo == null) {
+                throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+            }
+            // 数据库里的商品库存 - 购物车里的商品数量
+            Integer result = productInfo.getProductStock() - cartDTO.getProductQuantity();
+            if (result < 0) {
+                throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
+            }
+            productInfo.setProductStock(result);
+            repository.save(productInfo);
+        }
     }
 }
