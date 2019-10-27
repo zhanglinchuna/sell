@@ -1,7 +1,9 @@
 package com.zhanglinchun.sell.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.zhanglinchun.sell.dataobject.OrderDetail;
+import com.zhanglinchun.sell.utils.serializer.Date2LongSerializer;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -12,6 +14,8 @@ import java.util.List;
  * 订单详情
  */
 @Data
+// 不序列化为空的属性
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
 
     // 订单id.
@@ -31,8 +35,10 @@ public class OrderDTO {
     // 支付状态, 默认为0未支付.
     private Integer payStatus;
     // 创建时间.
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;
     // 更新时间.
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date updateTime;
     // 订单中的商品
     List<OrderDetail> orderDetailList;

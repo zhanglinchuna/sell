@@ -6,6 +6,8 @@ spring:
     url: jdbc:mysql://192.168.60.129:3306/sell?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
+  jackson:
+    default-property-inclusion: non_null  #不序列化对象里为空的字段
 
 
 server:
