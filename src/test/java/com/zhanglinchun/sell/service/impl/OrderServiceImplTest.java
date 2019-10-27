@@ -66,4 +66,24 @@ public class OrderServiceImplTest {
         System.out.println(order);
         Assert.assertNotNull(order);
     }
+
+    @Test
+    public void finish() {
+        OrderDTO orderDTO = orderService.findOne("1571924283955309004");
+        OrderDTO order = orderService.finish(orderDTO);
+        System.out.println(order);
+        Assert.assertNotNull(order);
+    }
+
+    @Test
+    public void paid() {
+        OrderDTO orderDTO = orderService.findOne("1571924283955309004");
+        OrderDTO order = orderService.paid(orderDTO);
+        System.out.println(order);
+        Assert.assertNotNull(order);
+    }
+
+    @Test
+    public void testFindList() {
+    }
 }
