@@ -12,3 +12,7 @@ spring:
 
 server:
   context-path: /sell  #访问项目url接口前缀
+
+wechat:
+  appId: wx1a67eaa5669d999a
+  appSecret: 0dcdaad4b0b6ea8545f3f8881ca230f5
