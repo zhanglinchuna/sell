@@ -1,8 +1,12 @@
 package com.zhanglinchun.sell.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.zhanglinchun.sell.dataobject.OrderDetail;
+import com.zhanglinchun.sell.enums.OrderStatusEnum;
+import com.zhanglinchun.sell.enums.PayStatusEnum;
+import com.zhanglinchun.sell.utils.EnumUtil;
 import com.zhanglinchun.sell.utils.serializer.Date2LongSerializer;
 import lombok.Data;
 
@@ -42,4 +46,14 @@ public class OrderDTO {
     private Date updateTime;
     // 订单中的商品
     List<OrderDetail> orderDetailList;
+
+    @JsonIgnore
+    public OrderStatusEnum getOrderStatusEnum() {
+        return EnumUtil.getByCode(orderStatus,OrderStatusEnum.class);
+    }
+
+    @JsonIgnore
+    public PayStatusEnum getPayStatusEnum() {
+        return EnumUtil.getByCode(payStatus,PayStatusEnum.class);
+    }
 }

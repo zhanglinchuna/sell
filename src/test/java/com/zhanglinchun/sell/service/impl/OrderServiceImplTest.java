@@ -85,5 +85,9 @@ public class OrderServiceImplTest {
 
     @Test
     public void testFindList() {
+        PageRequest pageRequest = new PageRequest(0, 2);
+        Page<OrderDTO> orderList = orderService.findList(pageRequest);
+        orderList.getContent().stream().forEach(e -> System.out.println(e));
+        Assert.assertNotNull(orderList);
     }
 }

@@ -30,6 +30,7 @@ public class WechatController {
      */
     @GetMapping("authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl) {
+        //returnUrl = "http://127.0.0.1/#/";
         // 需要用户同意授权，获取code
         String url = "http://zlc.natapp1.cc/sell/wechat/userInfo";
         String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAUTH2_SCOPE_BASE, URLEncoder.encode(returnUrl));

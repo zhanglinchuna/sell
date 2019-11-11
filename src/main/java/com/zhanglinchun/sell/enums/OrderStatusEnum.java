@@ -3,7 +3,7 @@ package com.zhanglinchun.sell.enums;
 import lombok.Getter;
 
 @Getter
-public enum OrderStatusEnum implements CodeEnum {
+public enum OrderStatusEnum implements CodeEnum<Integer> {
 
     NEW(0,"新订单"),
     FINISHED(1,"已结算"),
@@ -15,5 +15,10 @@ public enum OrderStatusEnum implements CodeEnum {
     OrderStatusEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    @Override
+    public Integer getEnumCode() {
+        return this.code;
     }
 }
