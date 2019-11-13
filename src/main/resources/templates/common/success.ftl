@@ -13,7 +13,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h4>
                     成功!
-                </h4> <strong>${msg!""}</strong><a href="${url}" class="alert-link">3s后自动跳转</a>
+                </h4> <strong>${msg!""}</strong><a href="${url}" class="alert-link"><span id="countDown">5</span> s后自动跳转</a>
             </div>
         </div>
     </div>
@@ -22,7 +22,17 @@
 </body>
 
 <script>
-    setTimeout('location.href="${url}"', 3000);
+    var i = 5;
+    var time = document.getElementById("countDown");
+    function countDown() {
+        time.innerHTML = i;
+        if (i == 0) {
+            location.href="${url}";
+        }
+        i--;
+    }
+    //setTimeout('location.href="${url}"', 5000);
+    setInterval("countDown()",1000);
 </script>
 
 </html>
